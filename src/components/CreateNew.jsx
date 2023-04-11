@@ -7,13 +7,14 @@ import ReactFlow, {
   ReactFlowProvider,
   useNodesState,
   useEdgesState,
+
 } from "reactflow";
 import Responses from "../components/shapes/response.js";
 import MainMessage from "../components/shapes/rectangle.js";
 import "reactflow/dist/style.css";
 import { NEWBOT, newBotEdges, Dummy } from "./shapes/botData.js";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { MarkerType } from "reactflow";
+import { Controls, MarkerType, MiniMap,Background } from "reactflow";
 import dagre from "dagre";
 
 const dagreGraph = new dagre.graphlib.Graph();
@@ -184,24 +185,24 @@ function CreateNew() {
           stroke: "#FF0072",
         },
       },
-      // {
-      //   id: "5",
-      //   source: "3",
-      //   target: "trigger-L3",
-      //   animated: false,
-      //   type: "step",
-      //   markerEnd: {
-      //     type: MarkerType.ArrowClosed,
-      //     labelBgBorderRadius: 100,
-      //     color: "#FF0072",
-      //     width: 20,
-      //     height: 20,
-      //   },
-      //   style: {
-      //     strokeWidth: 2,
-      //     stroke: "#FF0072",
-      //   },
-      // },
+      {
+        id: "5",
+        source: "2",
+        target: "5",
+        animated: false,
+        type: "step",
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          labelBgBorderRadius: 100,
+          color: "#0556f3",
+          width: 20,
+          height: 20,
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: "#0556f3",
+        },
+      },
     ];
     // setInitialEdges(edge);
     setEdges(edge);
@@ -276,7 +277,11 @@ function CreateNew() {
         fitView
         fitViewOptions={{ padding: 3 }}
         style={reactFlowStyle}
-      />
+      >
+      </ReactFlow>
+      {/* <MiniMap />
+      <Controls /> */}
+      <Background />
     </div>
   </>
    
