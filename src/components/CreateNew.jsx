@@ -47,167 +47,196 @@ function CreateNew() {
   };
   const creteNodes = () => {
     let node = [];
+    let parentId = null
     botData.levels.map((item, index) => {
       node.push({
         data: { ...item, is_trigger: false },
         type: "mainMessage",
         id: getId(index),
+        parent: parentId,
         sourcePosition: "right",
         targetPosition: "left",
         position: { x: 0, y: 0 },
       });
+      parentId = getId(index);
       if (item.is_trigger === "yes") {
-        node.push({
-          data: {
-            ...item,
-            is_trigger: true,
-            level: item?.level + "Auto Trigger",
-          },
-          type: "mainMessage",
-          sourcePosition: "right",
-          targetPosition: "left",
-          parent: getId(index),
-          id: "trigger-" + item.level,
-          position: { x: 0, y: 0 },
-        });
+        item.trigger.map((tObj,index)=>{
+          node.push({
+            data: {
+              ...item,
+              is_trigger: true,
+              level: item?.level + "Auto Trigger",
+            },
+            type: "mainMessage",
+            sourcePosition: "right",
+            targetPosition: "left",
+            parent:parentId,
+            id: "trigger-" + parentId+index,
+            position: { x: 0, y: 0 },
+          });
+        })
       }
     });
     // setInitialNodes(node);
     setNodes(node);
-    let edge = [
-      {
-        id: "1",
-        source: "1",
-        target: "2",
-        animated: false,
-        type: "step",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          labelBgBorderRadius: 100,
-          color: "#0556f3",
-          width: 20,
-          height: 20,
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#0556f3",
-        },
-      },
-      {
-        id: "T1",
-        source: "1",
-        target: "trigger-L0",
-        animated: false,
-        type: "step",
-        label: "Trigger",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          labelBgBorderRadius: 100,
-          width: 20,
-          height: 20,
-          color: "#FF0072",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#FF0072",
-        },
-      },
-      {
-        id: "T2",
-        source: "3",
-        target: "trigger-L2",
-        animated: false,
-        type: "step",
-        label: "Trigger",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          labelBgBorderRadius: 100,
-          width: 20,
-          height: 20,
-          color: "#FF0072",
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#FF0072",
-        },
-      },
-      {
-        id: "2",
-        source: "2",
-        target: "3",
-        animated: false,
-        type: "step",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          labelBgBorderRadius: 100,
-          color: "#0556f3",
-          width: 20,
-          height: 20,
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#0556f3",
-        },
-      },
-      {
-        id: "3",
-        source: "3",
-        target: "4",
-        animated: false,
-        type: "step",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          labelBgBorderRadius: 100,
-          color: "#0556f3",
-          width: 20,
-          height: 20,
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#0556f3",
-        },
-      },
-      {
-        id: "4",
-        source: "1",
-        target: "trigger-L3",
-        animated: false,
-        type: "step",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          labelBgBorderRadius: 100,
-          color: "#FF0072",
-          width: 20,
-          height: 20,
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#FF0072",
-        },
-      },
-      {
-        id: "5",
-        source: "2",
-        target: "5",
-        animated: false,
-        type: "step",
-        markerEnd: {
-          type: MarkerType.ArrowClosed,
-          labelBgBorderRadius: 100,
-          color: "#0556f3",
-          width: 20,
-          height: 20,
-        },
-        style: {
-          strokeWidth: 2,
-          stroke: "#0556f3",
-        },
-      },
-    ];
-    // setInitialEdges(edge);
+    let edge = [];
+    node.map((item,index)=>{
+      edge.push({
+        id: String(parseInt(Math.random(100000000)*1000000)),
+              source: item?.parent,
+              target: item.id,
+              animated: false,
+              type: "step",
+              markerEnd: {
+                type: MarkerType.ArrowClosed,
+                labelBgBorderRadius: 100,
+                color: "#0556f3",
+                width: 20,
+                height: 20,
+              },
+              style: {
+                strokeWidth: 2,
+                stroke: "#0556f3",
+              },
+      })
+    })
     setEdges(edge);
-    console.log(edge, node);
+    console.log(node, edge);
+
     getLayoutedElements(node, edge);
+    // let edge = [
+    //   {
+    //     id: "1",
+    //     source: "1",
+    //     target: "2",
+    //     animated: false,
+    //     type: "step",
+    //     markerEnd: {
+    //       type: MarkerType.ArrowClosed,
+    //       labelBgBorderRadius: 100,
+    //       color: "#0556f3",
+    //       width: 20,
+    //       height: 20,
+    //     },
+    //     style: {
+    //       strokeWidth: 2,
+    //       stroke: "#0556f3",
+    //     },
+    //   },
+    //   {
+    //     id: "T1",
+    //     source: "1",
+    //     target: "trigger-L0",
+    //     animated: false,
+    //     type: "step",
+    //     label: "Trigger",
+    //     markerEnd: {
+    //       type: MarkerType.ArrowClosed,
+    //       labelBgBorderRadius: 100,
+    //       width: 20,
+    //       height: 20,
+    //       color: "#FF0072",
+    //     },
+    //     style: {
+    //       strokeWidth: 2,
+    //       stroke: "#FF0072",
+    //     },
+    //   },
+    //   {
+    //     id: "T2",
+    //     source: "3",
+    //     target: "trigger-L2",
+    //     animated: false,
+    //     type: "step",
+    //     label: "Trigger",
+    //     markerEnd: {
+    //       type: MarkerType.ArrowClosed,
+    //       labelBgBorderRadius: 100,
+    //       width: 20,
+    //       height: 20,
+    //       color: "#FF0072",
+    //     },
+    //     style: {
+    //       strokeWidth: 2,
+    //       stroke: "#FF0072",
+    //     },
+    //   },
+    //   {
+    //     id: "2",
+    //     source: "2",
+    //     target: "3",
+    //     animated: false,
+    //     type: "step",
+    //     markerEnd: {
+    //       type: MarkerType.ArrowClosed,
+    //       labelBgBorderRadius: 100,
+    //       color: "#0556f3",
+    //       width: 20,
+    //       height: 20,
+    //     },
+    //     style: {
+    //       strokeWidth: 2,
+    //       stroke: "#0556f3",
+    //     },
+    //   },
+    //   {
+    //     id: "3",
+    //     source: "3",
+    //     target: "4",
+    //     animated: false,
+    //     type: "step",
+    //     markerEnd: {
+    //       type: MarkerType.ArrowClosed,
+    //       labelBgBorderRadius: 100,
+    //       color: "#0556f3",
+    //       width: 20,
+    //       height: 20,
+    //     },
+    //     style: {
+    //       strokeWidth: 2,
+    //       stroke: "#0556f3",
+    //     },
+    //   },
+    //   {
+    //     id: "4",
+    //     source: "1",
+    //     target: "trigger-L3",
+    //     animated: false,
+    //     type: "step",
+    //     markerEnd: {
+    //       type: MarkerType.ArrowClosed,
+    //       labelBgBorderRadius: 100,
+    //       color: "#FF0072",
+    //       width: 20,
+    //       height: 20,
+    //     },
+    //     style: {
+    //       strokeWidth: 2,
+    //       stroke: "#FF0072",
+    //     },
+    //   },
+    //   {
+    //     id: "5",
+    //     source: "2",
+    //     target: "5",
+    //     animated: false,
+    //     type: "step",
+    //     markerEnd: {
+    //       type: MarkerType.ArrowClosed,
+    //       labelBgBorderRadius: 100,
+    //       color: "#0556f3",
+    //       width: 20,
+    //       height: 20,
+    //     },
+    //     style: {
+    //       strokeWidth: 2,
+    //       stroke: "#0556f3",
+    //     },
+    //   },
+    // ];
+    // // setInitialEdges(edge);
+    // setEdges(edge);
+    // getLayoutedElements(node, edge);
   };
   useEffect(() => {
     creteNodes();
@@ -257,7 +286,6 @@ function CreateNew() {
     });
     setNodes(nodes);
     setEdges(edges);
-    console.log(nodes, edges);
     return { nodes, edges };
   };
   // const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
@@ -281,7 +309,7 @@ function CreateNew() {
       </ReactFlow>
       {/* <MiniMap />
       <Controls /> */}
-      <Background />
+      {/* <Background /> */}
     </div>
   </>
    

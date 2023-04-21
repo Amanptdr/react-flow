@@ -176,6 +176,10 @@ const Dummy = atom({
           {
             "trigger_type" : "auto",
             "tigger_id" : "4d9fcae2-7319-44e0-8b04-c5fb4f39f19b"
+          },
+          {
+            "trigger_type" : "Manual",
+            "tigger_id" : "4d9fcae2-7319-44e0-8b04-46554654iyokjnhl"
           }
         ]
       },
@@ -242,15 +246,15 @@ const Dummy = atom({
           "type" : "file",
           "url" : "www.docs.com"
         },
-        // // "is_trigger" : "yes",
-        // // "trigger_length" : "2",
-        // // "trigger" : [
-        // //   {
-        // //     "bot_id" : "7bb8eb81-e11f-4bf8-ad43-2b3b9c005035",
-        // //     "trigger_type" : "auto",
-        // //     "stake_holders" : null
-        // //   }
-        // ]
+        "is_trigger" : "yes",
+        "trigger_length" : "2",
+        "trigger" : [
+          {
+            "bot_id" : "7bb8eb81-e11f-4bf8-ad43-2b3b9c005035",
+            "trigger_type" : "auto",
+            "stake_holders" : null
+          }
+        ]
       }
     ],
     "bot_id" : "6beff537-85e5-486f-b372-dad017a51bd4",
