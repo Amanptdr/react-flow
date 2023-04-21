@@ -258,7 +258,7 @@ const Dummy = atom({
       }
     ],
     "bot_id" : "6beff537-85e5-486f-b372-dad017a51bd4",
-    "bot_name" : "elevator.Otis",
+    "bot_name" : "elevator.Otis11",
     "object_type" : "other",
     "bot_length" : "3"
   },
